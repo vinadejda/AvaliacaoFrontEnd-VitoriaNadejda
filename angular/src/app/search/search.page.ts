@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { legends } from '../names/nameslist';
 
 @Component({
   selector: 'app-search',
@@ -6,14 +7,27 @@ import { Component } from '@angular/core';
   styleUrls: ['search.page.scss']
 })
 export class SearchPage {
-  searchInput : string;
+  searchInput: string;
   results = [];
 
   ngOnInit() {
   }
 
   onSearch() {
-    console.log(`Search: ${this.searchInput}`)
-    
+    //verifica se searchInput está vazio
+    if (this.searchInput == "") {
+      this.results.length = 0;
+    }
+    //caso não esteja vazio
+    else {
+      //verifica se searchInput é igual a searchInput com letras minusculas usando o métod toLowerCase()
+      if (this.searchInput == this.searchInput.toLowerCase()) {
+        this.results = legends.filter(legends => legends.toLowerCase().includes(this.searchInput));
+      }
+      //se tiver letras maiuscula não realiza a pesquisa e altera o resultado para zero
+      else {
+        this.results.length = 0;
+      }
+    }
   }
 }
